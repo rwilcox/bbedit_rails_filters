@@ -24,12 +24,21 @@ if original_counterpart_path =~ /app\//
       counterpart_path.gsub!(/controllers/, "functional")
       alternative_filepath = "#{counterpart_path}/#{counterpart_filename}"
     end
+
+    if original_counterpart_path =~ /models/
+      counterpart_path = original_counterpart_path.gsub(/.+?app\//, "../../test/")
+      counterpart_path.gsub!(/models/, "unit")
+      alternative_filepath = "#{counterpart_path}/#{counterpart_filename}"
+    end
   end
 else
 
   # TODO: support TestUnit here too
-  counterpart_path.gsub!(/.+?spec\//, "../../app/")
-  counterpart_filename = counterpart_filename.gsub(/_spec.rb/, ".rb")
+  if counterpart_path =~ /\/spec\//
+    counterpart_path.gsub!(/.+?spec\//, "../../app/")
+    counterpart_filename = counterpart_filename.gsub(/_spec.rb/, ".rb")
+  #else
+  end
 end
 
 

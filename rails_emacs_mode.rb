@@ -10,7 +10,7 @@ counterpart_path = ""
 counterpart_filename = ENV["BB_DOC_NAME"].dup
 alternative_filepath = ""
 
-if original_counterpart_path =~ /app\//
+if original_counterpart_path =~ /\/app\//
   spec_folder_path = original_counterpart_path + "/../../spec"
   if File.exists?(spec_folder_path) # using RSPEC
     counterpart_path = original_counterpart_path.gsub(/.+?app\//, "../../spec/")
@@ -19,7 +19,7 @@ if original_counterpart_path =~ /app\//
 
     alternative_filepath = "#{counterpart_path}/#{counterpart_filename}"
   else
-    counterpart_path = original_counterpart_path.gsub(/.+?app\//, "../../test/")
+    counterpart_path = original_counterpart_path.gsub(/.+?\/app\//, "../../test/")
     counterpart_filename = counterpart_filename.gsub!(/.rb/, "_test.rb")
     if counterpart_filename =~ /controller/
       counterpart_path.gsub!(/controllers/, "functional")
@@ -46,7 +46,7 @@ else
     end
 
     if original_counterpart_path =~ /functional/
-      counterpart_path = original_counterpart_path.gsub(/.+?test\//, "../../app/")
+      counterpart_path = original_counterpart_path.gsub(/.+?\/test\//, "../../app/")
       counterpart_path.gsub!(/functional/, "controllers")
       counterpart_filename.gsub!(/_test.rb/, ".rb")
     end
